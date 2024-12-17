@@ -200,11 +200,12 @@ const styles = {
   container: {
     
     width: '400px',
-    margin: '50px auto',
+    margin: '50px 20px',
     padding: '20px',
     border: '1px solid #ddd',
     borderRadius: '10px',
     boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+    
     
   },
   form: {

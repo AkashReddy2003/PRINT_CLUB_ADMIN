@@ -4,7 +4,8 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
 function Homepage() {
-    const {add,load}=useContext(AuthContext);
+    const {add,load,deleteP}=useContext(AuthContext);
+    const [productId,setProductId]=useState("");
   const [productName, setProductName] = useState('');
   const [image, setImage] = useState(null);
   const [store, setStore] = useState('Sticker');
@@ -35,6 +36,7 @@ function Homepage() {
       alert('Please fill in all required fields.');
       return;
     }
+    
 
 
 
@@ -55,11 +57,23 @@ function Homepage() {
     
   };
 
+  const handleDelete=(e)=>{
+    e.preventDefault();
+    if(!productId){
+      alert("Enter product Id");
+      return;
+    }
+    deleteP(productId);
+
+    
+  }
+
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);  // Handling file input for image
   };
 
   return (
+    <div style={{display: 'flex',flexDirection:"row"}}>
     <div style={styles.container}>
       <h2>Add Product</h2>
       <form onSubmit={handleSubmit} style={styles.form}>
@@ -155,18 +169,43 @@ function Homepage() {
         
       </form>
     </div>
+    <div style={styles.container}>
+      <h2>Delete Product</h2>
+      <form onSubmit={handleDelete} style={styles.form}>
+        <div style={styles.inputGroup}>
+          <label>Product Id:</label>
+          <input
+            type="text"
+            value={productId}
+            onChange={(e) => setProductId(e.target.value)}
+            placeholder="Enter product Id"
+            style={styles.input}
+          />
+        </div>
+
+        
+
+        <button type="submit" style={styles.button}>
+          {load?"Loading":"Delete Product"}
+        </button>
+        
+      </form>
+    </div>
+    </div>
   );
 }
 
 // Basic inline styles for demo purposes
 const styles = {
   container: {
+    
     width: '400px',
     margin: '50px auto',
     padding: '20px',
     border: '1px solid #ddd',
     borderRadius: '10px',
     boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+    
   },
   form: {
     display: 'flex',

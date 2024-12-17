@@ -7,7 +7,7 @@ import {
   ref as storageRef,
   uploadBytes,
 } from "firebase/storage";
-import { getDatabase,push,ref,set } from "firebase/database";
+import { getDatabase,push,ref,set,remove } from "firebase/database";
 import { useEffect } from 'react';
 
 const AuthContext = createContext();
@@ -50,6 +50,13 @@ const MyContextProvider = ({ children }) => {
       })
   }
 
+  const deleteP=async(productId)=>{
+    setLoad(true);
+    await remove(ref(db,`products/${productId}`));
+    setLoad(false);
+
+  }
+
   const uploadFile = async(imageUpload) => {
     if (imageUpload === null) {
       alert("Please select an image");
@@ -67,7 +74,7 @@ const MyContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ myState, setMyState,auth,signin,add,load }}>
+    <AuthContext.Provider value={{ myState, setMyState,auth,signin,add,load ,deleteP}}>
       {children}
     </AuthContext.Provider>
   );
